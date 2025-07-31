@@ -395,6 +395,14 @@
       display: inline-block;
       animation: fadeIn 0.3s ease;
     }
+    button.reset {
+  background-color: #ff4444;
+  color: white;
+}
+
+button.reset:hover {
+  background-color: #cc0000;
+}
 </style>
 </head>
 <body>
@@ -504,7 +512,14 @@
         </div>
         <img id="logo-preview" class="logo-preview" alt="Logo preview">
       </div>
-
+      <div class="button-group">
+  <button onclick="generateQR()" class="generate">
+    <span>Generate QR Code</span>
+  </button>
+  <button onclick="resetOptions()" class="reset">
+  <span>Reset Options</span>
+</button>
+</div>
       <div class="button-group">
         <button onclick="generateQR()" class="generate">
           <span>Generate QR Code</span>
@@ -585,6 +600,38 @@ document.getElementById('logo-file').addEventListener('change', function(e) {
     reader.readAsDataURL(file);
   }
 });
+
+
+function resetOptions() {
+  // Reset size
+  document.getElementById('size').value = 200;
+  updateSizeValue();
+  
+  // Reset colors
+  document.getElementById('fgColor').value = '#000000';
+  document.getElementById('bgColor').value = '#ffffff';
+  updateColorPreview();
+  
+  // Reset error correction
+  document.getElementById('ecLevel').value = 'M';
+  
+  // Reset margin
+  document.getElementById('margin').checked = true;
+  
+  // Reset logo options
+  document.getElementById('logo-enabled').checked = false;
+  document.getElementById('logo-transparent').checked = true;
+  document.getElementById('logo-file').value = '';
+  document.getElementById('logo-preview').style.display = 'none';
+  document.getElementById('logo-preview').src = '';
+  toggleLogoUpload();
+  
+  // Clear any generated QR code
+  document.getElementById('qrcode').innerHTML = '';
+  
+  // Show confirmation (optional)
+  alert('All options have been reset to defaults');
+}
 
 // Generate QR code
 function generateQR() {
